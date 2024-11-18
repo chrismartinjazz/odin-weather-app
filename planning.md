@@ -10,9 +10,9 @@ js
   - DONE Promises or async / await or both.
 - DONE Functions to process JSON data and return only required data.
 - Handle errors:
-  - When location can't be found
-  - When API doesn't respond
-  - When there is no localStorage
+  - DONE When location can't be found
+  - DONE When API doesn't respond
+  - DONE When there is no localStorage
 html
 - DONE Form allowing location search, fetch weather info (still console.log)
 - Display data on webpage
