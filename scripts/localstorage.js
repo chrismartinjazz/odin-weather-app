@@ -3,5 +3,13 @@ export function setLocalStorage(data) {
 }
 
 export function getLocalStorage() {
-  return JSON.parse(localStorage.getItem("data"));
+  if (localStorage.getItem("data")) {
+    return JSON.parse(localStorage.getItem("data"));
+  } else {
+    return null;
+  }
+}
+
+export function removeLocalStorage() {
+  return localStorage.removeItem("data");
 }

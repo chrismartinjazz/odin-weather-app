@@ -1,5 +1,9 @@
 import { VISUAL_CROSSING_API_KEY } from "./env.js";
-import { getLocalStorage, setLocalStorage } from "./localstorage.js";
+import {
+  getLocalStorage,
+  setLocalStorage,
+  removeLocalStorage,
+} from "./localstorage.js";
 
 const content = document.querySelector(".content");
 const searchButton = document.querySelector(".search__button");
@@ -36,25 +40,28 @@ function displayWeather(location, date) {
 }
 
 async function getWeather(location, date) {
-  // Retrieve locally stored weather data (last queried).
+  /* Compare the query to locally stored data. If there is local data, it is 
+     for the same location search string and the current time is less than one
+     hour after stored data, return the data from localStorage.
+  */
   const localData = getLocalStorage();
-  const localDate = new Date(localData.date);
-  // Compare the query to locally stored data. If it is for the same location
-  // and the current time is less than one hour after stored data, return the data from localStorage.
-  // Otherwise, query the API, update local storage and return API data.
-  if (localData.location === location && lessThanOneHourAgo(localDate)) {
-    console.log("LOCAL STORAGE RETURNED");
-    return localData.weatherData;
-  } else {
-    const url = `https://weather.visualcrossing.com/VisualCrossingWebServices/rest/services/timeline/${location}/${formatDate(
-      date
-    )}/?key=${VISUAL_CROSSING_API_KEY}`;
-    const response = await fetch(url, { mode: "cors" });
-    const weatherData = await response.json();
-    console.log("API QUERIED");
-    setLocalStorage({ location, date, weatherData });
-    return weatherData;
+  if (localData) {
+    const localDate = new Date(localData.date);
+    if (localData.location === location && lessThanOneHourAgo(localDate)) {
+      console.log("LOCAL STORAGE RETURNED");
+      return localData.weatherData;
+    }
   }
+
+  // Otherwise, query the API, update local storage and return API data.
+  const url = `https://weather.visualcrossing.com/VisualCrossingWebServices/rest/services/timeline/${location}/${formatDate(
+    date
+  )}/?key=${VISUAL_CROSSING_API_KEY}`;
+  const response = await fetch(url, { mode: "cors" });
+  const weatherData = await response.json();
+  console.log("API QUERIED");
+  setLocalStorage({ location, date, weatherData });
+  return weatherData;
 }
 
 function parseWeatherData(

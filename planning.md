@@ -9,8 +9,12 @@ js
   - DONE Console.log information
   - DONE Promises or async / await or both.
 - DONE Functions to process JSON data and return only required data.
+- Handle errors:
+  - When location can't be found
+  - When API doesn't respond
+  - When there is no localStorage
 html
-- Form allowing location search, fetch weather info (still console.log)
+- DONE Form allowing location search, fetch weather info (still console.log)
 - Display data on webpage
 - Toggle Fahrenheit / Celsius
 css
