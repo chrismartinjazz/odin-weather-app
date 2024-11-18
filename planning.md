@@ -2,15 +2,18 @@
 
 ## Steps
 
-- Set up html js css
-- API functions first (Visual Crossing API)
-  - Take a location and return weather data for that location.
-  - Console.log information
-  - Promises or async / await or both.
-- Functions to process JSON data and return only required data.
+js
+- DONE Set up html js css
+- DONE API functions first (Visual Crossing API)
+  - DONE Take a location and return weather data for that location.
+  - DONE Console.log information
+  - DONE Promises or async / await or both.
+- DONE Functions to process JSON data and return only required data.
+html
 - Form allowing location search, fetch weather info (still console.log)
 - Display data on webpage
 - Toggle Fahrenheit / Celsius
+css
 - Add styling
   - Look of page changes based on data
   - Background color
@@ -18,3 +21,4 @@
   - Can use Giphy API to show weather-related gifs
 - Add a 'loading' component to display from time form submitted until information back from APi.
 
+ 
