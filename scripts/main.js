@@ -6,15 +6,13 @@ import {
 } from "./localstorage.js";
 import { formatDate, lessThanOneHourAgo } from "./datehelpers.js";
 
-const content = document.querySelector(".content");
+// Initialize search
 const searchButton = document.querySelector(".search__button");
-const searchInput = document.querySelector(".search__input");
-
-// Page interactions
 searchButton.addEventListener("click", () => {
   requestWeather(searchInput.value, new Date());
 });
 
+const searchInput = document.querySelector(".search__input");
 searchInput.addEventListener("keyup", (event) => {
   if (event.keyCode === 13) {
     requestWeather(searchInput.value, new Date());
@@ -26,22 +24,8 @@ async function requestWeather(location, date) {
   if (result.error) {
     console.log(result.error);
   } else {
-    displayWeather(result, celsius);
+    displayWeather(parseWeatherData(result, celsius));
   }
-}
-
-function displayWeather(data, units) {
-  /* Build display and add it to content.
-    [icon] Sunny 27deg
-    Min 10
-    Max 30
-    Chance of any rain: 70%
-    Possible rainfall: 3 mm
-    Clear conditions throughout...
-  */
-  // const myDiv = document.createElement("div");
-  // const myIcon = document.createElement("");
-  console.table(parseWeatherData(data, units));
 }
 
 async function getWeather(location, date) {
@@ -79,6 +63,31 @@ async function getWeather(location, date) {
   }
 }
 
+function displayWeather(data) {
+  console.table(data);
+
+  const display = {
+    ".resolved-address": data.resolvedAddress,
+    ".temp": `${data.temp}&deg;`,
+    ".feels-like.data": `${data.feelsLike}&deg;`,
+    ".temp-min.data": `${data.tempMin}&deg;`,
+    ".temp-max.data": `${data.tempMax}&deg;`,
+    ".humidity.data": `${data.humidity}%`,
+    ".precip-prob.data": `${data.precipProb}%`,
+    ".precip.data": `0 to ${data.precip}mm`,
+    ".description.row": data.description,
+  };
+
+  for (const [key, value] of Object.entries(display)) {
+    const element = document.querySelector(key);
+    element.innerHTML = value;
+  }
+
+  const icon = document.querySelector(".icon");
+  icon.setAttribute("src", `./icons/${data.icon}.svg`);
+  icon.setAttribute("alt", data.icon);
+}
+
 function parseWeatherData(
   data,
   units = (temp) => {
@@ -98,7 +107,7 @@ function parseWeatherData(
     feelsLike: units(day.feelslike),
     humidity: day.humidity,
     icon: day.icon,
-    precip: day.precip * 100,
+    precip: Math.ceil(day.precip * 100),
     precipType: day.preciptype ? day.preciptype[0] : null,
     precipProb: day.precipprob,
     resolvedAddress: data.resolvedAddress,
