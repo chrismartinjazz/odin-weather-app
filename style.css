@@ -1,5 +1,10 @@
 *, *::before, *::after {
   box-sizing: border-box;
+  margin: 0;
+}
+
+img {
+  width: 100%;
 }
 
 body {
@@ -41,4 +46,57 @@ button {
 
 button:hover {
   opacity: 0.75;
+}
+
+.temp {
+  font-size: 4rem;
+  font-weight: 900;
+}
+
+.icon {
+  flex: 1;
+  max-width: 10em;
+}
+
+.row {
+  /* border: solid red 1px; */
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 1em;
+}
+
+.col {
+  width: 100%;
+  /* border: solid green 2px; */
+  display: flex;
+  flex-direction: column;
+}
+
+.header {
+  align-items:flex-start;
+}
+
+.resolved-address {
+  align-self: flex-start;
+  justify-self: flex-start;
+}
+
+.temp {
+  justify-self: center;
+  align-self: center;
+  text-align: center;
+}
+
+.description {
+  text-align: right;
+}
+
+.label {
+  text-transform: uppercase;
+  font-size: 1rem;
+}
+
+.data {
+  font-size: 1.5rem;
+  font-weight: 600;
 }

@@ -39,8 +39,8 @@ function displayWeather(data, units) {
     Possible rainfall: 3 mm
     Clear conditions throughout...
   */
-  myDiv = document.createElement("div");
-  myIcon = document.createElement("");
+  // const myDiv = document.createElement("div");
+  // const myIcon = document.createElement("");
   console.table(parseWeatherData(data, units));
 }
 
