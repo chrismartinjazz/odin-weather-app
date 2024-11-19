@@ -9,47 +9,71 @@
 <body>
   <div class="container">
   
-    <input class="search__input" type="search" id="search" name="search" placeholder="Sydney"/>
+      <input class="search__input" type="search" id="search" name="search" placeholder="Location"/>
+      <div class="col">
+        <div class="switch__text">
+          <div>C&deg;</div>
+          <div>F&deg;</div>
+        </div>
+        <label class="switch" for="units-celsius-fahrenheit" >
+          <input type="checkbox" id="units-celsius-fahrenheit">
+          <span class="slider"></span>
+        </label>
+      </div>
+    
     <button class="btn search__button">Get Weather</button>
   
+    <div class="display-error">
+      <img class="display-error__icon" src="./icons/alert-circle-outline.svg" alt="error">
+      <div class="display-error__text">
+        <p>Hmm... We couldn't find that location.</p>
+        <p>You can try:</p>
+        <li>Checking the spelling</li>
+        <li>Adding the country</li>
+      </div>
+    </div>
+    
+    <div class="display-weather">
       <div class="row header">
-        <h1 class="resolved-address">Sydney, NSW 2000, Australia</h1>
+        <h1 class="resolved-address"></h1>
       </div>
       <div class="row">
-        <div class="temp">19.8&deg;</div>
-        <img class="icon" src="./icons/rain.svg" alt="">
+        <div class="temp"></div>
+        <img class="icon" src="" alt="">
       </div>
       <div class="row">
         <div class="col">
           <div class="feels-like label">Feels Like</div>
-          <div class="feels-like data">19.8&deg;</div>
+          <div class="feels-like data"></div>
         </div>
         <div class="col">
           <div class="temp-min label">Min</div>
-          <div class="temp-min data">17.2&deg;</div>
+          <div class="temp-min data"></div>
         </div>
         <div class="col">
           <div class="temp-max label">Max</div>
-          <div class="temp-max data">23.8&deg;</div>
+          <div class="temp-max data"></div>
         </div>
       </div>
       <div class="row">
         <div class="col">
           <div class="humidity label">Humidity</div>
-          <div class="humidity data">79.5%</div>
+          <div class="humidity data"></div>
         </div>
         <div class="col">
           <div class="precip-prob label">Chance of rain:</div>
-          <div class="precip-prob data">100%</div>
+          <div class="precip-prob data"></div>
         </div>
         <div class="col">
           <div class="precip label">Rainfall:</div>
-          <div class="precip data">0 to 3mm</div>
+          <div class="precip data"></div>
         </div>
       </div>
-      <div class="description row">Partly cloudy throughout the day with rain.</div>
+      <div class="description row"></div>
+    </div>
 
   </div>
+
   <footer>
     <a href="https://github.com/visualcrossing/WeatherIcons/tree/main/SVG/1st%20Set%20-%20Color">Icons</a> and <a href="https://www.visualcrossing.com/weather-api">weather data</a> from <a href="https://www.visualcrossing.com/">Visual Crossing</a>
   </footer>

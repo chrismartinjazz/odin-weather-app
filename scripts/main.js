@@ -6,6 +6,12 @@ import {
 } from "./localstorage.js";
 import { formatDate, lessThanOneHourAgo } from "./datehelpers.js";
 
+const displayErrorDiv = document.querySelector(".display-error");
+const displayErrorText = document.querySelector(".display-error__text");
+const unitsCelsiusFahrenheit = document.querySelector(
+  "#units-celsius-fahrenheit"
+);
+
 // Initialize search
 const searchButton = document.querySelector(".search__button");
 searchButton.addEventListener("click", () => {
@@ -22,7 +28,7 @@ searchInput.addEventListener("keyup", (event) => {
 async function requestWeather(location, date) {
   const result = await getWeather(location, date);
   if (result.error) {
-    console.log(result.error);
+    displayError(result.error);
   } else {
     displayWeather(parseWeatherData(result, celsius));
   }
@@ -33,6 +39,7 @@ async function getWeather(location, date) {
      for the same location search string and the current time is less than one
      hour after stored data, return the data from localStorage.
   */
+  displayErrorDiv.classList.remove("active");
   const localData = getLocalStorage();
   if (localData) {
     const localDate = new Date(localData.date);
@@ -60,6 +67,22 @@ async function getWeather(location, date) {
     }
   } catch (error) {
     return { error: "Network error or API unreachable" };
+  }
+}
+
+function displayError(error) {
+  displayErrorText.innerHTML = "";
+  displayErrorDiv.classList.add("active");
+
+  if (error === "Location not found") {
+    displayErrorText.innerHTML = `
+      <p><strong>Location not found</strong></p>
+      <p>You can try:</p>
+      <li>Checking the spelling</li>
+      <li>Adding the country</li>
+    `;
+  } else {
+    displayErrorText.innerHTML = error;
   }
 }
 

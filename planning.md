@@ -17,9 +17,9 @@ js
 html
 - DONE Form allowing location search, fetch weather info (still console.log)
 - DONE Display data on webpage
-- Display helpful error messages on webpage:
-  - Location not found
-  - No response from API
+- DONE Display helpful error messages on webpage:
+  - DONE Location not found
+  - DONE No response from API
 - Toggle Fahrenheit / Celsius
 css
 - Add styling
