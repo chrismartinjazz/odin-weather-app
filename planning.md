@@ -29,5 +29,7 @@ css
   - // Can use Giphy API to show weather-related gifs
 - DONE Add a 'loading' component to display from time form submitted until information back from APi.
 
-- Refactor and tidy up
+- DONE Refactor and tidy up
+
+- README.md
  

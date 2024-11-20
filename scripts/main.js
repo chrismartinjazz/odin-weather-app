@@ -79,7 +79,7 @@ async function getWeather(location, date) {
       console.log("API QUERIED");
       setLocalStorage({ location, date, weatherData });
       return weatherData;
-    } else if (response.status === 400) {
+    } else if (response.status === 400 || response.status === 429) {
       return { error: "Location not found" };
     } else {
       return { error: `Unexpected error: ${response.status}` };
