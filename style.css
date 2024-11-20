@@ -1,3 +1,5 @@
+/* CSS Reset */
+
 *, *::before, *::after {
   box-sizing: border-box;
   margin: 0;
@@ -7,23 +9,74 @@ img {
   width: 100%;
 }
 
-body {
-  font-family:'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
-  margin: 0;
-  padding: 0;
-  background-color: lightslategray;
+/* Variables */
+
+:root {
+  --color-bg1: #ADB3BC;
+  --color-bg2: #E4E3DF;
+  --color-highlight: #FC2E20;
+  --color-action: #875F59;
+  --color-text1: #010100;
+  --color-text2: white;
+  --footer-height: 2em;
 }
+
+/* Page Layout */
 
 .container {
   max-width: 600px;
   margin: 0 auto;
   padding: 2rem;
-  min-height: 100vh;
+  min-height: calc(100vh - var(--footer-height));
 }
+
+.row {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 1em;
+}
+
+.col {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+/* Button defaults */
+
+.btn {
+  display: block;
+  font-family: inherit;
+  font-size: 1.6rem;
+  background-color: var(--color-action);
+  color: var(--color-text2);
+  border: none;
+  padding: 0.5em 1.5em;
+  border-radius: 1em;
+  cursor: pointer;
+}
+
+.btn:hover {
+  opacity: 0.75;
+}
+
+/* Page elements */
+
+body {
+  font-family:'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+  background: radial-gradient(var(--color-bg1), var(--color-bg2));
+}
+
+footer {
+  height: var(--footer-height);
+  text-align: center;
+}
+
+/* Search bar */
 
 input[type="search"] {
   display: block;
-  max-width: 90%;
+  width: 100%;
   font-size: 1.4rem;
   padding: 0.5em 1.5em;
   border: none;
@@ -32,21 +85,19 @@ input[type="search"] {
   text-align: center;
 }
 
-button {
-  display: block;
-  font-family: inherit;
-  font-size: 1.6rem;
-  background-color: #4267B2;
-  color: white;
-  border: none;
-  margin: 1em auto;
-  padding: 0.5em 1.5em;
-  border-radius: 1em;
-  cursor: pointer;
+.search__button {
+  margin: 0;
+  width: 70%;
 }
 
-button:hover {
-  opacity: 0.75;
+/* Weather Display */
+
+.display-weather {
+  display: none;
+}
+
+.display-weather.active {
+  display: block;
 }
 
 .temp {
@@ -55,31 +106,7 @@ button:hover {
 }
 
 .icon {
-  flex: 1;
-  max-width: 10em;
-}
-
-.row {
-  /* border: solid red 1px; */
-  display: flex;
-  justify-content: space-between;
-  margin-bottom: 1em;
-}
-
-.col {
-  width: 100%;
-  /* border: solid green 2px; */
-  display: flex;
-  flex-direction: column;
-}
-
-.header {
-  align-items:flex-start;
-}
-
-.resolved-address {
-  align-self: flex-start;
-  justify-self: flex-start;
+  max-width: 8em;
 }
 
 .temp {
@@ -88,13 +115,10 @@ button:hover {
   text-align: center;
 }
 
-.conditions {
-  text-align: right;
-}
-
 .label {
   text-transform: uppercase;
   font-size: 1rem;
+  margin-bottom: 0.2rem;
 }
 
 .data {
@@ -106,22 +130,21 @@ button:hover {
 
 .display-error {
   display: none;
-}
-
-.display-error__icon {
-  max-width: 3em;
+  justify-content: center;
+  align-items: center;
+  gap: 2em;
+  color: var(--color-text2);
+  background-color: var(--color-highlight);
+  border-radius: 2em;
+  padding: 1em;
 }
 
 .display-error.active {
   display: flex;
-  justify-content: center;
-  align-items: center;
-  gap: 1em;
-  margin-bottom: 2em;
-  color: white;
-  background-color: #FF0F0F;
-  border-radius: 2em;
-  padding: 1em;
+}
+
+.display-error__icon {
+  max-width: 4em;
 }
 
 /* Celsius-Fahrenheit Units Slider */
@@ -133,7 +156,7 @@ button:hover {
   gap: 20px;
 }
 
-.switch {
+.switch__label {
   align-self: center;
   position: relative;
   display: inline-block;
@@ -141,7 +164,7 @@ button:hover {
   height: 34px;
 }
 
-.switch input {
+.switch__label input {
   opacity: 0;
   width: 0;
   height: 0;
@@ -154,7 +177,7 @@ button:hover {
   left: 0;
   right: 0;
   bottom: 0;
-  background-color: #ccc;
+  background-color: var(--color-bg1);
   border-radius: 34px;
   transition: .4s;
 }
@@ -166,19 +189,48 @@ button:hover {
   width: 26px;
   left: 4px;
   bottom: 4px;
-  background-color: white;
+  background-color: var(--color-text2);
   border-radius: 50%;
   transition: .4s;
 }
 
 input:checked + .slider {
-  background-color: #2196F3;
+  background-color: var(--color-bg2);
 }
 
 input:focus + .slider {
-  box-shadow: 0 0 1px #2196F3;
+  box-shadow: 0 0 1px var(--color-highlight);
 }
 
 input:checked + .slider:before {
   transform: translateX(26px);
+}
+
+/* Loader */
+
+.loader {
+  display: none;
+  border: 4px solid rgba(255, 255, 255, 0.3);
+  border-top: 4px var(--color-action);
+  border-radius: 50%;
+  width: 2em;
+  height: 2em;
+  animation: spin 1s linear infinite;
+  align-self: center;
+  justify-self: center;
+}
+
+@keyframes spin {
+  0% {
+    transform: rotate(0deg);
+  }
+
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+.loading {
+  background-color: #ccc;
+  pointer-events: none;
 }

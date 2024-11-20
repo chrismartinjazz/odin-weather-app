@@ -20,13 +20,14 @@ html
 - DONE Display helpful error messages on webpage:
   - DONE Location not found
   - DONE No response from API
-- Toggle Fahrenheit / Celsius
+- DONE Toggle Fahrenheit / Celsius
 css
 - Add styling
-  - Look of page changes based on data
-  - Background color
+  - DONE Look of page changes based on data
+  - DONE Background color
   - DONE Images describing weather - used Visual Crossing icons.
   - // Can use Giphy API to show weather-related gifs
-- Add a 'loading' component to display from time form submitted until information back from APi.
+- DONE Add a 'loading' component to display from time form submitted until information back from APi.
 
+- Refactor and tidy up
  

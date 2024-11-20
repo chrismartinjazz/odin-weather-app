@@ -5,12 +5,15 @@ import {
   removeLocalStorage,
 } from "./localstorage.js";
 import { formatDate, lessThanOneHourAgo } from "./datehelpers.js";
+import { setColors } from "./setcolors.js";
 
 const displayErrorDiv = document.querySelector(".display-error");
+const displayWeatherDiv = document.querySelector(".display-weather");
 const displayErrorText = document.querySelector(".display-error__text");
 const unitsCelsiusFahrenheit = document.querySelector(
   "#units-celsius-fahrenheit"
 );
+const loader = document.querySelector(".loader");
 
 // Initialize search
 const searchButton = document.querySelector(".search__button");
@@ -26,12 +29,24 @@ searchInput.addEventListener("keyup", (event) => {
 });
 
 async function requestWeather(location, date) {
+  // Disable the buttons and show the loader
+  searchButton.disabled = true;
+  searchInput.disabled = true;
+  loader.style.display = "inline-block";
+
   const result = await getWeather(location, date);
   if (result.error) {
     displayError(result.error);
   } else {
-    displayWeather(parseWeatherData(result, celsius));
+    setColors(Number(result.days[0].temp));
+    unitsCelsiusFahrenheit.checked
+      ? displayWeather(parseWeatherData(result))
+      : displayWeather(parseWeatherData(result, celsius));
   }
+
+  searchButton.disabled = false;
+  searchInput.disabled = false;
+  loader.style.display = "none";
 }
 
 async function getWeather(location, date) {
@@ -39,7 +54,7 @@ async function getWeather(location, date) {
      for the same location search string and the current time is less than one
      hour after stored data, return the data from localStorage.
   */
-  displayErrorDiv.classList.remove("active");
+
   const localData = getLocalStorage();
   if (localData) {
     const localDate = new Date(localData.date);
@@ -73,6 +88,7 @@ async function getWeather(location, date) {
 function displayError(error) {
   displayErrorText.innerHTML = "";
   displayErrorDiv.classList.add("active");
+  displayWeatherDiv.classList.remove("active");
 
   if (error === "Location not found") {
     displayErrorText.innerHTML = `
@@ -87,7 +103,7 @@ function displayError(error) {
 }
 
 function displayWeather(data) {
-  console.table(data);
+  displayErrorDiv.classList.remove("active");
 
   const display = {
     ".resolved-address": data.resolvedAddress,
@@ -106,9 +122,13 @@ function displayWeather(data) {
     element.innerHTML = value;
   }
 
+  // Update the icon to match weather data
   const icon = document.querySelector(".icon");
   icon.setAttribute("src", `./icons/${data.icon}.svg`);
   icon.setAttribute("alt", data.icon);
+
+  // Display the weather div
+  displayWeatherDiv.classList.add("active");
 }
 
 function parseWeatherData(

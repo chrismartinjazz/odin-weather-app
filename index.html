@@ -10,26 +10,25 @@
   <div class="container">
   
       <input class="search__input" type="search" id="search" name="search" placeholder="Location"/>
-      <div class="col">
-        <div class="switch__text">
-          <div>C&deg;</div>
-          <div>F&deg;</div>
+      <div class="row">
+        <button class="btn search__button">Get Weather</button>
+        <div class="loader col"></div>
+        <div class="switch">
+          <div class="switch__text">
+            <div>C&deg;</div>
+            <div>F&deg;</div>
+          </div>
+          <label class="switch__label" for="units-celsius-fahrenheit" >
+            <input type="checkbox" id="units-celsius-fahrenheit">
+            <span class="slider"></span>
+          </label>
         </div>
-        <label class="switch" for="units-celsius-fahrenheit" >
-          <input type="checkbox" id="units-celsius-fahrenheit">
-          <span class="slider"></span>
-        </label>
       </div>
-    
-    <button class="btn search__button">Get Weather</button>
-  
+      
     <div class="display-error">
       <img class="display-error__icon" src="./icons/alert-circle-outline.svg" alt="error">
       <div class="display-error__text">
-        <p>Hmm... We couldn't find that location.</p>
-        <p>You can try:</p>
-        <li>Checking the spelling</li>
-        <li>Adding the country</li>
+        
       </div>
     </div>
     
