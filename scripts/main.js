@@ -1,37 +1,36 @@
 import { VISUAL_CROSSING_API_KEY } from "./env.js";
-import {
-  getLocalStorage,
-  setLocalStorage,
-  removeLocalStorage,
-} from "./localstorage.js";
+import { getLocalStorage, setLocalStorage } from "./localstorage.js";
 import { formatDate, lessThanOneHourAgo } from "./datehelpers.js";
 import { setColors } from "./setcolors.js";
+import { displayError, displayWeather } from "../display.js";
 
-const displayErrorDiv = document.querySelector(".display-error");
-const displayWeatherDiv = document.querySelector(".display-weather");
-const displayErrorText = document.querySelector(".display-error__text");
+const loader = document.querySelector(".loader");
 const unitsCelsiusFahrenheit = document.querySelector(
   "#units-celsius-fahrenheit"
 );
-const loader = document.querySelector(".loader");
-
-// Initialize search
 const searchButton = document.querySelector(".search__button");
-searchButton.addEventListener("click", () => {
-  requestWeather(searchInput.value, new Date());
-});
-
 const searchInput = document.querySelector(".search__input");
-searchInput.addEventListener("keyup", (event) => {
-  if (event.keyCode === 13) {
+
+initializeSearch();
+
+// Initialize search button and field
+function initializeSearch() {
+  searchButton.addEventListener("click", () => {
     requestWeather(searchInput.value, new Date());
-  }
-});
+  });
+
+  searchInput.addEventListener("keyup", (event) => {
+    if (event.keyCode === 13) {
+      requestWeather(searchInput.value, new Date());
+    }
+  });
+}
+
+// Functions to request and handle weather data
 
 async function requestWeather(location, date) {
   // Disable the buttons and show the loader
-  searchButton.disabled = true;
-  searchInput.disabled = true;
+  toggleSearchInput();
   loader.style.display = "inline-block";
 
   const result = await getWeather(location, date);
@@ -44,9 +43,14 @@ async function requestWeather(location, date) {
       : displayWeather(parseWeatherData(result, celsius));
   }
 
-  searchButton.disabled = false;
-  searchInput.disabled = false;
+  // Enable buttons and hide the loader
+  toggleSearchInput();
   loader.style.display = "none";
+}
+
+function toggleSearchInput() {
+  !searchButton.disabled;
+  !searchInput.disabled;
 }
 
 async function getWeather(location, date) {
@@ -85,52 +89,6 @@ async function getWeather(location, date) {
   }
 }
 
-function displayError(error) {
-  displayErrorText.innerHTML = "";
-  displayErrorDiv.classList.add("active");
-  displayWeatherDiv.classList.remove("active");
-
-  if (error === "Location not found") {
-    displayErrorText.innerHTML = `
-      <p><strong>Location not found</strong></p>
-      <p>You can try:</p>
-      <li>Checking the spelling</li>
-      <li>Adding the country</li>
-    `;
-  } else {
-    displayErrorText.innerHTML = error;
-  }
-}
-
-function displayWeather(data) {
-  displayErrorDiv.classList.remove("active");
-
-  const display = {
-    ".resolved-address": data.resolvedAddress,
-    ".temp": `${data.temp}&deg;`,
-    ".feels-like.data": `${data.feelsLike}&deg;`,
-    ".temp-min.data": `${data.tempMin}&deg;`,
-    ".temp-max.data": `${data.tempMax}&deg;`,
-    ".humidity.data": `${data.humidity}%`,
-    ".precip-prob.data": `${data.precipProb}%`,
-    ".precip.data": `0 to ${data.precip}mm`,
-    ".description.row": data.description,
-  };
-
-  for (const [key, value] of Object.entries(display)) {
-    const element = document.querySelector(key);
-    element.innerHTML = value;
-  }
-
-  // Update the icon to match weather data
-  const icon = document.querySelector(".icon");
-  icon.setAttribute("src", `./icons/${data.icon}.svg`);
-  icon.setAttribute("alt", data.icon);
-
-  // Display the weather div
-  displayWeatherDiv.classList.add("active");
-}
-
 function parseWeatherData(
   data,
   units = (temp) => {
@@ -160,7 +118,8 @@ function parseWeatherData(
   };
 }
 
-// Unit conversion helper
+// Unit conversion helper function
+
 function celsius(temp) {
   if (isNaN(temp) || temp === null) {
     return null;
